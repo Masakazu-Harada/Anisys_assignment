@@ -1,4 +1,6 @@
 class Employee < ApplicationRecord
+  has_secure_password #パスワードのハッシュ化
+  
   belongs_to :branch
   belongs_to :department
   belongs_to :boss
