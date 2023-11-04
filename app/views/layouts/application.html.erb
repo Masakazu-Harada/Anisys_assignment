@@ -11,11 +11,20 @@
   </head>
 
   <body>
-    <nav class="app-title navbar navbar-expand-lg navbar-light bg-light">
-      <div class="navbar-brand">AnisysWebapp</div>
-    </nav>
-    <div class="container">
-      <%= yield %>
-    </div>  
+    <header class="custom-header">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">AnisysWebapp</a>
+        </div>
+      </nav>
+    </header>
+    
+    <%= yield %>
+
+    <footer class="custom-footer mt-4">
+      <div class="container text-center py-3">
+        &copy; <%= Time.zone.now.year %> AnisysWebapp. All rights reserved.
+      </div>
+    </footer> 
   </body>
 </html>
