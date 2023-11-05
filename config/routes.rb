@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  root 'home#top'
-  
+
   namespace :admin do
-    references :employees
+    resources :employees
   end
-  
+
+  root to: 'home#top'
 end
