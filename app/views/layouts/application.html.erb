@@ -15,9 +15,27 @@
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
           <a class="navbar-brand" href="/">AnisysWebapp</a>
+          <div class="navbar-nav ml-auto">
+            <% if current_employee %>
+              <!-- 従業員がログインしている場合 -->
+              <%= link_to 'ログアウト', logout_path, data: {turbo_method: :delete, turbo_confirm: 'ログアウトしますか？'}, class: 'nav-link' %>
+              <% if current_employee.admin? %>
+                <!-- 管理者がログインしている場合 -->
+                <%= link_to '従業員管理', "#", class: 'nav-link' %>
+              <% end %>
+            <% else %>
+              <!-- 従業員がログインしていない場合 -->
+              <%= link_to 'ログイン', login_path, class: 'nav-link' %>
+            <% end %>
+          </div>
         </div>
       </nav>
     </header>
+    <div class="container">
+      <% if flash.notice.present? %>
+        <div class="alert alert-success"><%= flash.notice %></div>
+      <% end %>
+    </div>
     
     <%= yield %>
 

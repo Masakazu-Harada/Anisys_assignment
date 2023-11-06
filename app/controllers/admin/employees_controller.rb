@@ -46,4 +46,8 @@ class Admin::EmployeesController < ApplicationController
   def employee_params
     params.require(:employee).permit(:full_name, :kana_name, :admin, :log_in_id, :password, :password_confirmation, :email) 
   end
+
+  def require_admin
+    redirect_to root_url unless current_employee.admin?
+  end
 end
