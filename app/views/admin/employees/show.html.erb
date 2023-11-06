@@ -1,2 +1,34 @@
-<h1>Admin::Users#show</h1>
-<p>Find me in app/views/admin/users/show.html.erb</p>
+<h1>従業員の詳細</h1>
+
+<nav class="justify-content-end">
+  <%= link_to '一覧', admin_employees_path, class: 'nav-link' %>
+</nav>
+
+<table class="table table-hover">
+  <tbody>
+    <tr>
+      <th><%= Employee.human_attribute_name(:id) %></th>
+      <td><%= @employee.id %></td>
+    </tr>
+    <tr>
+      <th><%= Employee.human_attribute_name(:full_name) %></th>
+      <td><%= @employee.full_name %></td>
+    </tr>
+    <tr>
+      <th><%= Employee.human_attribute_name(:log_in_id) %></th>
+      <td><%= @employee.log_in_id %></td>
+    </tr>
+    <tr>
+      <th><%= Employee.human_attribute_name(:admin) %></th>
+      <td><%= @employee.admin? ? 'あり' : 'なし' %></td>
+    </tr>
+    <tr>
+      <th><%= Employee.human_attribute_name(:created_at) %></th>
+      <td><%= @employee.created_at %></td>
+    </tr>
+    <tr>
+      <th><%= Employee.human_attribute_name(:updated_at) %></th>
+      <td><%= @employee.updated_at %></td>
+    </tr>
+  </tbody>
+</table>
