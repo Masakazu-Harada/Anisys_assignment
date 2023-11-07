@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_employee
   before_action :login_required
 
+  add_flash_types :success, :info, :warning, :danger
+
   private
 
   def current_employee

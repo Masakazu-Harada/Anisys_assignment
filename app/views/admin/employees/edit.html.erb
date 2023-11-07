@@ -1,2 +1,9 @@
-<h1>Admin::Users#edit</h1>
-<p>Find me in app/views/admin/users/edit.html.erb</p>
+<h1>従業員の編集</h1>
+
+
+<nav class="nav justify-content-end">
+  <%= link_to '従業員一覧へ戻る', admin_employees_path, class: 'nav-link' %> 
+</nav>
+
+<%= render partial: 'form', locals: { employee: @employee } %>
+

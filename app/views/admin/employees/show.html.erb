@@ -1,7 +1,7 @@
 <h1>従業員の詳細</h1>
 
-<nav class="justify-content-end">
-  <%= link_to '一覧', admin_employees_path, class: 'nav-link' %>
+<nav class="nav justify-content-end">
+  <%= link_to '従業員一覧へ戻る', admin_employees_path, class: 'nav-link' %> 
 </nav>
 
 <table class="table table-hover">
@@ -24,11 +24,11 @@
     </tr>
     <tr>
       <th><%= Employee.human_attribute_name(:created_at) %></th>
-      <td><%= @employee.created_at %></td>
+      <td><%= l @employee.created_at %></td>
     </tr>
     <tr>
       <th><%= Employee.human_attribute_name(:updated_at) %></th>
-      <td><%= @employee.updated_at %></td>
+      <td><%= l @employee.updated_at %></td>
     </tr>
   </tbody>
 </table>

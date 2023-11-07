@@ -1,6 +1,6 @@
 class Admin::EmployeesController < ApplicationController
   def index
-    @employees = Employee.all
+    @employees = Employee.all.order(:id)
   end
 
   def show
@@ -19,7 +19,7 @@ class Admin::EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
 
     if @employee.save
-      redirect_to admin_employee_url(@employee), notice: '従業員:#{@employee.full_name}を登録しました。'
+      redirect_to admin_employee_url(@employee), notice: '従業員情報を登録しました。'
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Admin::EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
 
     if @employee.update(employee_params)
-      redirect_to admin_employee_url(@employee), notice: '従業員:#{@employee.full_name}情報を更新しました。'
+      redirect_to admin_employee_url(@employee), notice: '従業員情報を更新しました。'
     else
       render :edit
     end
@@ -38,7 +38,7 @@ class Admin::EmployeesController < ApplicationController
   def destroy
     @employee = Employee.find(params[:id])
     @employee.destroy
-    redirect_to admin_employees_url, notice: '従業員:#{@employee.full_name}情報を削除しました。'
+    redirect_to admin_employees_url, notice: '従業員情報を削除しました。'
   end
 
   private

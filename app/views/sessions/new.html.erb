@@ -1,6 +1,6 @@
 <div class="login-container">
   <h2>ログイン</h2>
-  <%= form_with(scope: :session, url: login_path, local: true) do |f| %>
+  <%= form_with(scope: :session, url: login_path, local: true, data: { turbo: false }) do |f| %>
     <div class="form-group">
       <%= f.label :log_in_id, 'ログインID' %>
       <%= f.text_field :log_in_id, class: 'form-control' %>
