@@ -2,7 +2,7 @@ class Employee < ApplicationRecord
   has_secure_password #パスワードのハッシュ化
   
   validates :full_name, presence: true, length: { maximum: 20 } #氏名の必須入力と文字数制限
-  validates :log_in_id, presence: true, uniqueness: true #ログインIDの必須入力と一意性
+  validates :log_in_id, presence: true, uniqueness: true, length: { maximum: 50 } #ログインIDの必須入力と一意性と文字数制限
   validates :email, presence: true, uniqueness: true #メールアドレスの必須入力と一意性
 
 
