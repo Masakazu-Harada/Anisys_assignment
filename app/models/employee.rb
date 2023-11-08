@@ -1,8 +1,10 @@
 class Employee < ApplicationRecord
   has_secure_password #パスワードのハッシュ化
   
-  validates :full_name, presence: true #氏名の必須入力
+  validates :full_name, presence: true, length: { maximum: 20 } #氏名の必須入力と文字数制限
   validates :log_in_id, presence: true, uniqueness: true #ログインIDの必須入力と一意性
+  validates :email, presence: true, uniqueness: true #メールアドレスの必須入力と一意性
+
 
   belongs_to :branch, optional: true #optional: trueでnilを許可する
   belongs_to :department, optional: true  #optional: trueでnilを許可する
