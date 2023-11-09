@@ -10,10 +10,31 @@
     <%= f.label :full_name, '名前' %>
     <%= f.text_field :full_name, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+    <%= f.label :full_name_kana, '名前(カナ)' %>
+    <%= f.text_field :full_name_kana, class: 'form-control' %>
+  </div>
   <div class="form-group">
     <%= f.label :log_in_id, 'ログインID' %>
     <%= f.text_field :log_in_id, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+    <%= f.label :email, 'メールアドレス' %>
+    <%= f.email_field :email, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :branch_id, '所属' %>
+    <%= f.select :branch_id, Branch.all.map { |b| [b.name, b.id] }, { include_blank: true }, { class: 'form-control' } %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :department_id, '部署' %>
+    <%= f.select :department_id, Department.all.map { |d| [d.name, d.id] }, { include_blank: true }, { class: 'form-control' } %>
+  </div>
+
   <div class="form-check">
     <%= f.label :admin, 'form-check-label' do %>
       <%= f.check_box :admin, { class: 'form-check-input' }, "admin", "general" %>
