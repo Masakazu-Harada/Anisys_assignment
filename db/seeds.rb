@@ -26,3 +26,8 @@ kanto_prefectures.each do |prefecture|
     branch.branch_type = 1 # 工場
   end
 end
+
+departments = %w(人事部 総務部 経理部 技術部 営業部 製造部)
+departments.each do |department|
+  Department.find_or_create_by!(name: department)
+end
