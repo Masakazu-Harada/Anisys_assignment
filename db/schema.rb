@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_011916) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_09_023401) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,8 +34,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_011916) do
 
   create_table "employees", force: :cascade do |t|
     t.integer "staff_number"
-    t.string "full_name"
-    t.string "kana_name"
+    t.string "full_name", limit: 20
+    t.string "kana_name", limit: 20
     t.string "log_in_id", null: false
     t.string "password_digest", null: false
     t.integer "admin", default: 0
@@ -47,6 +47,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_011916) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "login_attempts", default: 0, null: false
+    t.integer "boss_id"
     t.index ["branch_id"], name: "index_employees_on_branch_id"
     t.index ["department_id"], name: "index_employees_on_department_id"
     t.index ["email"], name: "index_employees_on_email", unique: true
