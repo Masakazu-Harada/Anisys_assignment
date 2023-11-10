@@ -7,6 +7,11 @@
 
 <%= form_with model: [:admin, @employee], local: true do |f| %>
   <div class="form-group">
+    <%= f.label :staff_number, '社員番号' %>
+    <%= f.text_field :staff_number, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :full_name, '名前' %>
     <%= f.text_field :full_name, class: 'form-control' %>
   </div>
