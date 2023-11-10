@@ -9,10 +9,14 @@ class Admin::EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
+    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    @supervisors = Employee.where(position: higher_positions)
   end
 
   def edit
     @employee = Employee.find(params[:id])
+    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    @supervisors = Employee.where(position: higher_positions)
   end
 
   def create
@@ -44,7 +48,11 @@ class Admin::EmployeesController < ApplicationController
   private
 
   def employee_params
-    params.require(:employee).permit(:full_name, :kana_name, :admin, :log_in_id, :password, :password_confirmation, :email) 
+    params.require(:employee).permit(
+      :full_name, :kana_name, :admin, :log_in_id, 
+      :password, :password_confirmation, :email,
+      :branch_id, :department_id, :boss_id, :position
+    ) 
   end
 
   def require_admin
