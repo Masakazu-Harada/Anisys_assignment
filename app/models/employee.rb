@@ -19,5 +19,7 @@ class Employee < ApplicationRecord
     chief: 1, #係長
     head: 2, #課長
     manager: 3, #部長
+    officer: 4, #役員
+    president: 5 #社長
   }
 end
