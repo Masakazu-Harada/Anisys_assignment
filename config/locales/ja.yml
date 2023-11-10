@@ -12,9 +12,12 @@ ja:
     attributes:
       employee:
         id: 'ID'
+        staff_number: '社員番号'
         full_name: '氏名'
         log_in_id: 'ログインID'
         admin: '管理者権限'
+        branch_id: '所属'
+        department_id: '部署'
         password: 'パスワード'
         password_confirmation: 'パスワード(確認用)'
         created_at: '作成日時'

@@ -49,9 +49,9 @@ class Admin::EmployeesController < ApplicationController
 
   def employee_params
     params.require(:employee).permit(
-      :full_name, :kana_name, :admin, :log_in_id, 
-      :password, :password_confirmation, :email,
-      :branch_id, :department_id, :boss_id, :position
+      :full_name, :kana_name, :admin, :log_in_id, :password, 
+      :password_confirmation, :email, :branch_id, :department_id, 
+      :boss_id, :position, :staff_number
     ) 
   end
 
