@@ -14,6 +14,8 @@
         <th><%= Employee.human_attribute_name(:full_name) %></th>
         <th><%= Employee.human_attribute_name(:branch_id) %></th>
         <th><%= Employee.human_attribute_name(:department_id)%></th>
+        <th><%= Employee.human_attribute_name(:position)%></th>
+        <th><%= Employee.human_attribute_name(:boss_id) %></th>
         <th><%= Employee.human_attribute_name(:admin) %></th>
         <th><%= Employee.human_attribute_name(:created_at) %></th>
         <th><%= Employee.human_attribute_name(:updated_at) %></th>
@@ -24,8 +26,10 @@
         <tr>
           <td><%= employee.staff_number %></td>
           <td><%= link_to employee.full_name, [:admin, employee] %></td>
-          <td><%= employee.branch.name %></td>
-          <td><%= employee.department.name %></td>
+          <td><%= employee.branch ? employee.branch.name : '支店確認中' %></td>
+          <td><%= employee.department ? employee.department.name : '部署確認中' %></td>
+          <td><%= employee.position ? t("activerecord.attributes.employee.positions.#{employee.position}") : '役職確認中'%></td>
+          <td><%= employee.boss ? employee.boss.full_name : '上司なし' %></td>
           <td><%= employee.admin? ? 'あり' : 'なし' %></td>
           <td><%= l employee.created_at %></td>
           <td><%= l employee.updated_at %></td>
