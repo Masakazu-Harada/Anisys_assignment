@@ -1,6 +1,7 @@
 class Admin::EmployeesController < ApplicationController
   def index
-    @employees = Employee.all.order(:id)
+    @employees = Employee.includes(:branch, :department, :boss).order(:id)
+    @employees = Employee.includes(:branch, :department, :boss).order(:id)
   end
 
   def show
