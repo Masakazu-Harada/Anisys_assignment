@@ -1,7 +1,7 @@
 class Admin::EmployeesController < ApplicationController
   def index
-    @employees = Employee.includes(:branch, :department, :boss).order(:id)
-    @employees = Employee.includes(:branch, :department, :boss).order(:id)
+    @q = Employee.ransack(params[:q])
+    @employees = @q.result.includes(:branch, :department, :boss).order(:id)
   end
 
   def show

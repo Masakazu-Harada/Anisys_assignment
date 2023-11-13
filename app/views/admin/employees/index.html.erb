@@ -6,6 +6,18 @@
 
 <%= link_to '従業員登録', new_admin_employee_path, class: 'btn btn-primary' %>
 
+<%= search_form_for @q, url: admin_employees_path do |f| %>
+  <div class="row g3 mb-3">
+    <div class="col-4 col-xl-2">
+      <%= f.label :full_name_cont, '従業員名', class: 'form-label fw-bold' %>
+      <%= f.search_field :full_name_cont, class: 'form-control' %>
+    </div>
+    <div class="col-4 col-xl-2">
+      <%= f.label :branch_id_eq, '支店', class: 'form-label fw-bold' %>
+      <%= f.collection_select :branch_id_eq, Branch.all, :id, :name, { include_blank: 'すべて' }, class: 'form-control' %>
+  </div>
+<% end %>
+
 <div class="mb-3">
   <table class="table table-hover">
     <thead class="thead-default">
