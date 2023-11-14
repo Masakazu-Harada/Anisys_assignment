@@ -6,7 +6,7 @@
 
 <%= link_to '従業員登録', new_admin_employee_path, class: 'btn btn-primary' %>
 
-<%= search_form_for @q, url: admin_employees_path do |f| %>
+<%= search_form_for @q, url: admin_employees_path, html: { data: { controller: "search", action: "input->search#submit" } } do |f| %>
   <div class="row g3 mb-3">
     <div class="col-4 col-xl-2">
       <%= f.label :full_name_cont, '従業員名', class: 'form-label fw-bold' %>
@@ -26,9 +26,11 @@
     </div>
   </div>
   <div>
-    <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
-      <i class="fas fa-search"></i>
-      <%= t('defaults.検索') %>
+    <%if false%>
+      <%= button_tag(type: 'submit', class: 'btn btn-primary') do %>
+        <i class="fas fa-search"></i>
+        <%= t('defaults.検索') %>
+      <% end %>
     <% end %>
     <%= link_to "リセット", admin_employees_path(@employees), class: "btn btn-outline-secondary" %>
   </div>
