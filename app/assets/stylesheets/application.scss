@@ -34,3 +34,12 @@
   color: #ffffff; /* テキスト色を白に設定 */
 }
 
+.btn-skyblue {
+  background-color: rgb(143, 186, 230); // 通常時の背景色（水色）
+  color: #ffffff; // テキスト色を白に設定
+
+  &:hover {
+    background-color: #9fc24d; // ホバー時の背景色（リーフグリーン）
+    color: #ffffff; // ホバー時のテキスト色を白に設定（必要に応じて）
+  }
+}

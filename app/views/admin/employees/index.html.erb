@@ -64,7 +64,7 @@
           <td><%= l employee.created_at %></td>
           <td><%= l employee.updated_at %></td>
           <td>
-            <%= link_to '編集', edit_admin_employee_path(employee), class: 'btn btn-primary mr-3' %>
+            <%= link_to '編集', edit_admin_employee_path(employee), class: 'btn btn-skyblue mr-3' %>
             <%= link_to '削除', [:admin, employee], method: :delete, data: {turbo_method: :delete, turbo_confirm: '削除しますか？'}, class: 'btn btn-danger' %>
           </td>
         </tr>
