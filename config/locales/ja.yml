@@ -31,6 +31,18 @@ ja:
           manager: '部長'
           officer: '役員'
           president: '社長'
+  enums:
+    employee:
+      admin:
+        general: '一般ユーザー'
+        admin: '管理者'
+      position:
+        staff: '一般社員'
+        chief: '係長'
+        head: '課長'
+        manager: '部長'
+        officer: '役員'
+        president: '社長'
   date:
     abbr_day_names:
     - 日

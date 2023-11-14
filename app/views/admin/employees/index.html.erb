@@ -13,9 +13,23 @@
       <%= f.search_field :full_name_cont, class: 'form-control' %>
     </div>
     <div class="col-4 col-xl-2">
-      <%= f.label :branch_id_eq, '支店', class: 'form-label fw-bold' %>
-      <%= f.collection_select :branch_id_eq, Branch.all, :id, :name, { include_blank: 'すべて' }, class: 'form-control' %>
+      <%= f.label :position, '役職', class: 'form-label fw-bold' %>
+      <%= f.select :position_eq, Employee.positions_i18n.invert, { include_blank: t('defaults.選択なし') }, class: 'form-control' %>
+    </div>
+    <div class="col-4 col-xl-2">
+      <%= f.label :branch_id_eq, '所属', class: 'form-label fw-bold' %>
+      <%= f.collection_select :branch_id_eq, Branch.all, :id, :name, { include_blank: '選択なし' }, class: 'form-control' %>
+    </div>
+    <div class="col-4 col-xl-2">
+      <%= f.label :department_id_eq, '部署', class: 'form-label fw-bold' %>
+      <%= f.collection_select :department_id_eq, Department.all, :id, :name, { include_blank: '選択なし' }, class: 'form-control' %>
+    </div>
   </div>
+  <div>
+    <%#= button_tag(icon_with_text('search','検索'), class: 'btn btn-primary') %>
+    <%= link_to "リセット", admin_employees_path(@employees), class: "btn btn-outline-secondary" %>
+  </div>
+
 <% end %>
 
 <div class="mb-3">
