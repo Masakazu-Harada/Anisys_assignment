@@ -1,4 +1,6 @@
 class Admin::EmployeesController < ApplicationController
+  before_action :set_supervisors, only: [:new, :create, :edit, :update]
+
   def index
     @q = Employee.ransack(params[:q])
     @employees = @q.result.includes(:branch, :department, :boss).order(:id)
@@ -10,14 +12,14 @@ class Admin::EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
-    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    @supervisors = Employee.where(position: higher_positions)
+    #higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    #@supervisors = Employee.where(position: higher_positions)
   end
 
   def edit
     @employee = Employee.find(params[:id])
-    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    @supervisors = Employee.where(position: higher_positions)
+    #higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    #@supervisors = Employee.where(position: higher_positions)
   end
 
   def create
@@ -60,5 +62,10 @@ class Admin::EmployeesController < ApplicationController
 
   def require_admin
     redirect_to root_url unless current_employee.admin?
+  end
+
+  def set_supervisors
+    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    @supervisors = Employee.where(position: higher_positions)
   end
 end
