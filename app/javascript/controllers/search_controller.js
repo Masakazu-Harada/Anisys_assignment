@@ -12,6 +12,6 @@ export default class extends Controller {
     // 連続で実行されるとTimeoutはクリアされるため、最後の処理だけしか実行されない
     this.timeout = setTimeout( ()=> {
       this.element.requestSubmit()
-    }, 1500)
+    }, 1200)
   }
 }

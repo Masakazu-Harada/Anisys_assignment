@@ -1,9 +1,16 @@
 class Employee < ApplicationRecord
   has_secure_password #パスワードのハッシュ化
+  before_save { self.email = email.downcase }
   
-  validates :full_name, presence: true, length: { maximum: 20 } #氏名の必須入力と文字数制限
+  validates :full_name, :kana_name, presence: true, length: { maximum: 20 } #氏名の必須入力と文字数制限
   validates :log_in_id, presence: true, uniqueness: true, length: { maximum: 50 } #ログインIDの必須入力と一意性と文字数制限
-  validates :email, presence: true, uniqueness: true #メールアドレスの必須入力と一意性
+  
+  EMAIL_REGEXP = /\A[a-zA-Z0-9.!\#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\z/
+validates :email, presence: true, format: { with: EMAIL_REGEXP }, uniqueness: { case_sensitive: false } #メールアドレスの必須入力とフォーマットと一意性と大文字小文字の区別
+  
+  
+  validates :staff_number, presence: true, uniqueness: true #社員番号の必須入力と一意性と文字数制限
+  validates :position, presence: true
 
 
   belongs_to :branch, optional: true #optional: trueでnilを許可する

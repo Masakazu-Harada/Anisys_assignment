@@ -26,17 +26,19 @@ class Admin::EmployeesController < ApplicationController
     if @employee.save
       redirect_to admin_employee_url(@employee), notice: '従業員情報を登録しました。'
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
     @employee = Employee.find(params[:id])
-
+    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    @supervisors = Employee.where(position: higher_positions)
+  
     if @employee.update(employee_params)
       redirect_to admin_employee_url(@employee), notice: '従業員情報を更新しました。'
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
