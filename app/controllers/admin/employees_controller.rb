@@ -16,12 +16,6 @@ class Admin::EmployeesController < ApplicationController
     #@supervisors = Employee.where(position: higher_positions)
   end
 
-  def edit
-    @employee = Employee.find(params[:id])
-    #higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    #@supervisors = Employee.where(position: higher_positions)
-  end
-
   def create
     @employee = Employee.new(employee_params)
 
@@ -30,6 +24,12 @@ class Admin::EmployeesController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def edit
+    @employee = Employee.find(params[:id])
+    #higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
+    #@supervisors = Employee.where(position: higher_positions)
   end
 
   def update
@@ -43,7 +43,6 @@ class Admin::EmployeesController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-
 
   def destroy #従業員レコードを削除せず、有効フラグを無効にする実装
     @employee = Employee.find(params[:id])
@@ -72,8 +71,8 @@ class Admin::EmployeesController < ApplicationController
     params.require(:employee).permit(
       :full_name, :kana_name, :admin, :log_in_id, :password, 
       :password_confirmation, :email, :branch_id, :department_id, 
-      :boss_id, :position, :staff_number, :id
-    ) 
+      :boss_id, :position, :id,
+    )
   end
 
   def require_admin
