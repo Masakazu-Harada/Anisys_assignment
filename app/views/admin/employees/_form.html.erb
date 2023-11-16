@@ -136,6 +136,11 @@
             <%= f.label :new_password_confirmation, '新しいパスワードの確認', class: 'control-label' %>
             <%= f.password_field :new_password_confirmation, class: 'form-control' %>
           </div>
+          <div class="row">
+            <div class="col text-end">
+              <%= button_tag '閉じる', type: 'button', class: 'btn btn-outline-secondary', data: { action: "click->password#closeNewPasswordField" } %>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
