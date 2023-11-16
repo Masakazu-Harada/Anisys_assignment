@@ -23,17 +23,17 @@ class Employee < ApplicationRecord
   enum admin: { general: 0, admin: 1 } 
   
   #他にadmin権限を有している従業員がいるかどうかを判定するメソッド
-
   def other_admin_exists?
-    # 結論、「現在の従業員が管理者であり、かつ他にも管理者の従業員が存在する場合にtrueを返す」
-    # 現在の従業員が管理者であり、かつ他にも管理者の従業員が存在する場合にtrueを返す
-    # admin?で現在の従業員が管理者かどうかを判定する
-    # 且つ、Employee.adminでenumのadminの値が1（管理者）の従業員を取得する
-    # where.not(id: id)で現在の従業員を除外する
-    # exists?で取得した従業員(admin)が存在するかどうかを判定する
-    admin? && Employee.admin.where.not(id: id).exists?
+    # enumで定義したadminの値がgeneral（一般）の場合、
+    # trueを返すのでadminかそうでないかを判定する
+    if general?
+      true
+    else
+      # else分でadminと判定されたので
+      # 現在のidを持った管理者とは違うが管理者の存在をえexits?メソッドで判定する
+      Employee.admin.where.not(id: id).exists?
+    end
   end
-  
   
   #社員の退職状況をenumで管理する　0:無効（退職）, 1:有効（在籍中）
   enum enable: { inactive: 0, active: 1 } 
