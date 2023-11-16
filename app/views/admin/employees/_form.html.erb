@@ -109,21 +109,34 @@
   </div>
   
   
-  <%# パスワードとパスワード(確認用)の実装 %>
+  <%# パスワードの実装 %>
   <div class="row mb-3">
     <div class="col-md-4">
       <div class="form-group">
         <%= f.label :password, 'パスワード', class: 'col-form-label' %>
-        <%= f.password_field :password, class: 'form-control', placeholder: 'パスワードを入力' %>
+        <%= f.password_field :password, class: 'form-control', placeholder: 'パスワードを入力', disabled: true, data: { passwords_target: "formPassword" } %>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, 'パスワード(確認用)', class: 'col-form-label' %>
-        <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'パスワードを再入力' %>
+        <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'パスワードを再入力', disabled: true, data: { passwords_target: "formPasswordConfirmation" } %>
       </div>
     </div>
+    
     <% if @employee.persisted? %>
       <div class="col-md-2 align-self-end">
         <%= button_tag 'パスワードを更新する', type: 'button', class: 'btn btn-outline-info h-100', data: { action: "click->password#enablePasswordField" } %>
+      </div>
+      <div class="col-md-6">
+        <div id="new-password-fields" class="hidden">
+          <div class="form-group">
+            <%= f.label :new_password, '新しいパスワード', class: 'control-label' %>
+            <%= f.password_field :new_password, class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :new_password_confirmation, '新しいパスワードの確認', class: 'control-label' %>
+            <%= f.password_field :new_password_confirmation, class: 'form-control' %>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
