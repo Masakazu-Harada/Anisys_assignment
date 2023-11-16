@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_09_054506) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_16_054258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -33,7 +33,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_054506) do
   end
 
   create_table "employees", force: :cascade do |t|
-    t.integer "staff_number"
     t.string "full_name", limit: 20
     t.string "kana_name", limit: 20
     t.string "log_in_id", null: false
@@ -53,7 +52,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_054506) do
     t.index ["department_id"], name: "index_employees_on_department_id"
     t.index ["email"], name: "index_employees_on_email", unique: true
     t.index ["log_in_id"], name: "index_employees_on_log_in_id", unique: true
-    t.index ["staff_number"], name: "index_employees_on_staff_number", unique: true
   end
 
   add_foreign_key "employees", "branches"

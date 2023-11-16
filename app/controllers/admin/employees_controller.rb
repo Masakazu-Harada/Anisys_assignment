@@ -3,7 +3,7 @@ class Admin::EmployeesController < ApplicationController
 
   def index
     @q = Employee.ransack(params[:q])
-    @employees = @q.result.includes(:branch, :department, :boss).order(:id)
+    @employees = @q.result.includes(:branch, :department, :boss).order(id: :asc)
   end
 
   def show
@@ -72,7 +72,7 @@ class Admin::EmployeesController < ApplicationController
     params.require(:employee).permit(
       :full_name, :kana_name, :admin, :log_in_id, :password, 
       :password_confirmation, :email, :branch_id, :department_id, 
-      :boss_id, :position, :staff_number
+      :boss_id, :position, :staff_number, :id
     ) 
   end
 

@@ -54,8 +54,8 @@
     <tbody>
       <% @employees.each do |employee| %>
         <tr>
-          <td><%= employee.staff_number %></td>
-          <td><%= link_to employee.full_name, [:admin, employee] %></td>
+          <td><%= employee.id %></td>
+          <td><%= link_to employee.full_name, edit_admin_employee_path(employee) %></td>
           <td><%= employee.branch ? employee.branch.name : '支店確認中' %></td>
           <td><%= employee.department ? employee.department.name : '部署確認中' %></td>
           <td><%= employee.position ? t("activerecord.attributes.employee.positions.#{employee.position}") : '役職確認中'%></td>
