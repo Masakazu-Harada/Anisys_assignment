@@ -22,8 +22,41 @@ class Employee < ApplicationRecord
   #admin権限をenumで管理する　0:一般, 1:管理者
   enum admin: { general: 0, admin: 1 } 
   
+  #他にadmin権限を有している従業員がいるかどうかを判定するメソッド
+
+  def other_admin_exists?
+    # 結論、「現在の従業員が管理者であり、かつ他にも管理者の従業員が存在する場合にtrueを返す」
+    # 現在の従業員が管理者であり、かつ他にも管理者の従業員が存在する場合にtrueを返す
+    # admin?で現在の従業員が管理者かどうかを判定する
+    # 且つ、Employee.adminでenumのadminの値が1（管理者）の従業員を取得する
+    # where.not(id: id)で現在の従業員を除外する
+    # exists?で取得した従業員(admin)が存在するかどうかを判定する
+    admin? && Employee.admin.where.not(id: id).exists?
+  end
+  
+  
   #社員の退職状況をenumで管理する　0:無効（退職）, 1:有効（在籍中）
   enum enable: { inactive: 0, active: 1 } 
+
+  # 従業員を無効にするメソッド
+  def deactivate!
+    update(enable: :inactive)
+  end
+
+  # 従業員を有効にするメソッド
+  def activate!
+    update(enable: :active)
+  end
+
+  # 従業員がアクティブかどうかを判定するメソッド
+  def active?
+    enable == 'active'
+  end
+
+  # 従業員がアクティブでないかどうかを判定するメソッド
+  def inactive?
+    enable == 'inactive'
+  end
   
   #社員の役職をenumで管理する　0:一般社員, 1:係長, 2:課長, 3:部長, 4:役員, 5:社長 
   enum position: {
@@ -34,7 +67,6 @@ class Employee < ApplicationRecord
     officer: 4, #役員
     president: 5 #社長
   }
-
 
   # ransackの検索条件を設定する
   def self.ransackable_attributes(auth_object = nil)

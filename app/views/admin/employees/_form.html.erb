@@ -1,3 +1,143 @@
+<div class="my-3">
+  <%= link_to 'ログアウト', logout_path, data: {turbo_method: :delete, turbo_confirm: 'ログアウトしますか？'}, class: 'btn btn-outline-danger' %>
+</div>
+
+<%= form_with model: [:admin, @employee], local: true, html: { class: 'row g-3 align-items-center' } do |f| %>
+  <%#社員番号の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :staff_number, required_field_label('社員番号'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.text_field :staff_number, class: 'form-control', placeholder: '社員番号を入力してください' %>
+    </div>
+  </div>
+
+  <%# 名前の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :full_name, required_field_label('名前'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-8">
+      <%= f.text_field :full_name, class: 'form-control', placeholder: '例)山田 太郎  半角スペースあり' %>
+    </div>
+    <div class="col-sm-2">
+      <%= link_to '検索', admin_employees_path, class: 'btn btn-secondary btn-block' %>
+    </div>
+  </div>
+
+  <%# カナ名の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :kana_name, required_field_label('名前カナ'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.text_field :kana_name, class: 'form-control', placeholder: 'ヤマダ タロウ  半角スペースあり' %>
+    </div>
+  </div>
+
+  <%# ログインIDの実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :log_in_id, required_field_label('ログインID'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.text_field :log_in_id, class: 'form-control', placeholder: 'ログインIDを入力' %>
+    </div>
+  </div>
+
+  <%# メールアドレスの実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :email, required_field_label('メールアドレス'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.email_field :email, class: 'form-control', placeholder: 'メールアドレスを入力' %>
+    </div>
+  </div>
+
+  <%# 部署の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :department_id, required_field_label('部署'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.select :department_id, Department.all.map { |d| [d.name, d.id] }, { include_blank: true }, { class: 'form-control' } %>
+    </div>
+  </div>
+
+  <%# 役職の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :position, required_field_label('役職'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.select :position, positions_for_select, { include_blank: true }, { class: 'form-control' } %>
+    </div>
+  </div>
+
+  <%# 上司の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :boss_id, '上司', class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-8">
+      <%= f.select :boss_id, @supervisors.map { |s| [s.full_name, s.id] }, { include_blank: true }, { class: 'form-control' } %>
+    </div>
+    <div class="col-sm-2">
+      <%= link_to '検索', admin_employees_path, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+
+  <%#管理者権限の実装 %>
+  <div class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">管理者権限</legend>
+      <div class="col-sm-10">
+        <div class="form-check form-check-inline">
+          <%= f.radio_button :admin, "admin", class: 'form-check-input' %>
+          <%= f.label :admin_admin, '権限あり', class: 'form-check-label' %>
+        </div>
+        <div class="form-check form-check-inline">
+          <%= f.radio_button :admin, "general", class: 'form-check-input' %>
+          <%= f.label :admin_general, '権限なし', class: 'form-check-label' %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <%# パスワードの実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :password, 'パスワード', class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.password_field :password, class: 'form-control', placeholder: 'パスワードを入力' %>
+    </div>
+  </div>
+
+  <%# パスワード(確認用)の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :password_confirmation, 'パスワード(確認用)', class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'パスワードを再入力' %>
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-12">
+      <% if @employee.new_record? %>
+        <%= f.submit '登録する', class: 'btn btn-primary me-2' %>
+      <% else %>
+        <%= f.submit '更新する', class: 'btn btn-primary me-2' %>
+        <%= link_to '削除(無効化)する', [:admin, @employee], method: :delete, data: {turbo_method: :delete, turbo_confirm: '従業員情報を無効化しますか？'}, class: 'btn btn-danger' %>
+      <% end %>
+      <%= button_to 'クリア', '#', method: :get, class: 'btn btn-secondary' %>
+    </div>
+  </div>
+<% end %>
+
 <% if employee.errors.present? %>
   <div class="alert alert-danger" role="alert">
     <h4 class="alert-heading">フォームの送信に問題があります:</h4>
@@ -7,77 +147,4 @@
       <% end %>
     </ul>
   </div>
-<% end %>
-
-<%= form_with model: [:admin, @employee], local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :staff_number, required_field_label('社員番号') %>
-    <%= f.text_field :staff_number, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :full_name, required_field_label('名前') %>
-    <div class="input-group">
-      <%= f.text_field :full_name, class: 'form-control' %>
-      <div class="input-group-append">
-        <%= link_to '検索', admin_employees_path, class: 'btn btn-secondary ml-2' %>
-      </div>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :kana_name, required_field_label('名前カナ') %>
-    <%= f.text_field :kana_name, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :log_in_id, required_field_label('ログインID') %>
-    <%= f.text_field :log_in_id, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :email, required_field_label('メールアドレス') %>
-    <%= f.email_field :email, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :branch_id, required_field_label('所属') %>
-    <%= f.select :branch_id, Branch.all.map { |b| [b.name, b.id] }, { include_blank: true }, { class: 'form-control' } %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :department_id, required_field_label('部署') %>
-    <%= f.select :department_id, Department.all.map { |d| [d.name, d.id] }, { include_blank: true }, { class: 'form-control' } %>
-  </div>
-
-  <%# application_helperにpositions_for_selectメソッドを追記 %>
-  <div class="form-group">
-    <%= f.label :position, required_field_label('役職') %>
-    <%= f.select :position, positions_for_select, { include_blank: true }, { class: 'form-control' } %>
-  </div>
-
-<div class="form-group">
-    <%= f.label :boss_id, '上司' %>
-    <div class="input-group">
-      <%= f.select :boss_id, @supervisors.map { |s| [s.full_name, s.id] }, { include_blank: true}, { class: 'form-control'} %>
-      <div class="nput-group-append">
-        <%= link_to '検索', admin_employees_path, class: 'btn btn-secondary ml-2' %>
-      </div>
-    </div>
-</div>
-
-  <div class="form-check">
-    <%= f.label :admin, 'form-check-label' do %>
-      <%= f.check_box :admin, { class: 'form-check-input' }, "admin", "general" %>
-      管理者権限
-    <% end %>
-  </div>
-  <div class="form-group">
-    <%= f.label :password, 'パスワード' %>
-    <%= f.password_field :password, class: 'form-control' %>
-  </div>
-  <div class="form-group">
-    <%= f.label :password_confirmation, 'パスワード(確認用)' %>
-    <%= f.password_field :password_confirmation, class: 'form-control' %>
-  </div>
-  <%= f.submit '登録する', class: 'btn btn-primary' %>
 <% end %>

@@ -44,11 +44,27 @@ class Admin::EmployeesController < ApplicationController
     end
   end
 
-  def destroy
+
+  def destroy #従業員レコードを削除せず、有効フラグを無効にする実装
     @employee = Employee.find(params[:id])
-    @employee.destroy
-    redirect_to admin_employees_url, notice: '従業員情報を削除しました。'
+
+    unless @employee.other_admin_exists?
+      redirect_to admin_employees_url, alert: '他にシステム管理者がいないため、無効化できません。'
+      return
+    end
+    
+    if @employee.deactivate!
+      redirect_to admin_employees_url, notice: "#{@employee.full_name}さんを無効化しました。"
+    else
+      redirect_to admin_employees_url, alert: '従業員の無効化に失敗しました。'
+    end
   end
+
+  #def destroy レコードを削除する実装の場合
+    #@employee = Employee.find(params[:id])
+    #@employee.destroy
+    #redirect_to admin_employees_url, notice: '従業員情報を削除しました。'
+  #end
 
   private
 

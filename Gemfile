@@ -81,3 +81,4 @@ gem 'jquery-rails'
 gem 'bcrypt', '~> 3.1.7'
 gem 'ransack'
 gem 'enum_help'
+gem "font-awesome-sass", "~> 6.4.2"
