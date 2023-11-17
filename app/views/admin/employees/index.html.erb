@@ -12,10 +12,15 @@
       <%= f.label :full_name_cont, '従業員名', class: 'form-label fw-bold' %>
       <%= f.search_field :full_name_cont, class: 'form-control' %>
     </div>
-    <div class="col-4 col-xl-2">
-      <%= f.label :position_eq, '役職', class: 'form-label fw-bold' %>
-      <%= f.select :position_eq, Employee.positions.map { |k, v| [Employee.positions_i18n[k], v] }, { include_blank: t('defaults.選択なし') }, class: 'form-control' %>
-    </div> 
+    
+    <%# コメントアウトしている部分は、役職検索の実装 %>
+    <% if false %>
+      <div class="col-4 col-xl-2">
+        <%= f.label :position_eq, '役職', class: 'form-label fw-bold' %>
+        <%= f.select :position_eq, Employee.positions.map { |k, v| [Employee.positions_i18n[k], v] }, { include_blank: t('defaults.選択なし') }, class: 'form-control' %>
+      </div> 
+    <% end %>
+
     <div class="col-4 col-xl-2">
       <%= f.label :branch_id_eq, '所属', class: 'form-label fw-bold' %>
       <%= f.collection_select :branch_id_eq, Branch.all, :id, :name, { include_blank: '選択なし' }, class: 'form-control' %>

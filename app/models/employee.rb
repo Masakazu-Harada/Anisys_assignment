@@ -69,7 +69,7 @@ class Employee < ApplicationRecord
   # ransackの検索条件を設定する
   def self.ransackable_attributes(auth_object = nil)
     # 検索に使用したい属性の名前を配列として返す
-    %w[boss_id branch_id department_id full_name position]
+    %w[boss_id branch_id department_id full_name position kana_name]
   end
 end
 
