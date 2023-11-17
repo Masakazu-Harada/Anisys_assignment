@@ -10,3 +10,6 @@ application.register("hello", HelloController)
 // searchコントローラー作成時に自動追記される（これがないとStimulusを利用できない）
 import SearchController from "./search_controller"
 application.register("search", SearchController)
+
+import IssenController from "./issen_controller"
+application.register("issen", IssenController)
