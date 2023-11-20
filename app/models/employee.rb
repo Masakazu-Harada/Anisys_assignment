@@ -11,8 +11,9 @@ class Employee < ApplicationRecord
   validates :position, presence: true
 
 
-  belongs_to :branch, optional: true #optional: trueでnilを許可する
-  belongs_to :department, optional: true  #optional: trueでnilを許可する
+  belongs_to :branch, optional: true #支店モデルに属する optional: trueでnilを許可する
+  belongs_to :department, optional: true  #部署モデルに属する optional: trueでnilを許可する
+  belongs_to :role, optional: true #権限モデルに属する optional: trueでnilを許可する
   
   belongs_to :boss, class_name: 'Employee', foreign_key: 'boss_id', optional: true #上司の従業員情報を取得するためのアソシエーション
   has_many :team_members, class_name: 'Employee', foreign_key: 'boss_id' #部下の従業員情報を取得するためのアソシエーション

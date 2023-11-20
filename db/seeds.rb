@@ -31,3 +31,8 @@ departments = %w(人事部 総務部 経理部 技術部 営業部 製造部)
 departments.each do |department|
   Department.find_or_create_by!(name: department)
 end
+
+roles = %w(システム管理者 人事 業務企画 予算管理 総務 経理 技術 営業 製造)
+roles.each do |role|
+  Role.find_or_create_by!(name: role)
+end
