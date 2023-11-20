@@ -45,6 +45,7 @@
   <table class="table table-hover">
     <thead class="thead-default">
       <tr>
+        <th><%= '選択' %></th>
         <th><%= Employee.human_attribute_name(:staff_number) %></th>
         <th><%= Employee.human_attribute_name(:full_name) %></th>
         <th><%= Employee.human_attribute_name(:branch_id) %></th>
@@ -59,6 +60,7 @@
     <tbody>
       <% @employees.each do |employee| %>
         <tr>
+          <td><%= link_to '選択', edit_admin_employee_path(employee) %></td>
           <td><%= employee.id %></td>
           <td><%= link_to employee.full_name, edit_admin_employee_path(employee) %></td>
           <td><%= employee.branch ? employee.branch.name : '支店確認中' %></td>
