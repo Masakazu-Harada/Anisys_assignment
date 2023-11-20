@@ -9,7 +9,7 @@
 <%= search_form_for @q, url: admin_employees_path, html: { data: { controller: "search", action: "input->search#submit" } } do |f| %>
   <div class="row g3 mb-3">
     <div class="col-4 col-xl-2">
-      <%= f.label :full_name_cont, '従業員名', class: 'form-label fw-bold' %>
+      <%= f.label :full_name_cont, '名前検索', class: 'form-label fw-bold' %>
       <%= f.search_field :full_name_cont, class: 'form-control' %>
     </div>
     
@@ -50,11 +50,7 @@
         <th><%= Employee.human_attribute_name(:full_name) %></th>
         <th><%= Employee.human_attribute_name(:branch_id) %></th>
         <th><%= Employee.human_attribute_name(:department_id)%></th>
-        <th><%= Employee.human_attribute_name(:position)%></th>
         <th><%= Employee.human_attribute_name(:boss_id) %></th>
-        <th><%= Employee.human_attribute_name(:admin) %></th>
-        <th><%= Employee.human_attribute_name(:created_at) %></th>
-        <th><%= Employee.human_attribute_name(:updated_at) %></th>
       </tr>
     </thead>
     <tbody>
@@ -62,18 +58,28 @@
         <tr>
           <td><%= link_to '選択', edit_admin_employee_path(employee) %></td>
           <td><%= employee.id %></td>
-          <td><%= link_to employee.full_name, edit_admin_employee_path(employee) %></td>
+          <td><%= employee.full_name %></td>
           <td><%= employee.branch ? employee.branch.name : '支店確認中' %></td>
           <td><%= employee.department ? employee.department.name : '部署確認中' %></td>
-          <td><%= employee.position ? t("activerecord.attributes.employee.positions.#{employee.position}") : '役職確認中'%></td>
+          
+          <% if false %> 
+            <td><%= employee.position ? t("activerecord.attributes.employee.positions.#{employee.position}") : '役職確認中'%></td> 
+          <% end %>
+          
           <td><%= employee.boss ? employee.boss.full_name : '上司なし' %></td>
-          <td><%= employee.admin? ? 'あり' : 'なし' %></td>
-          <td><%= l employee.created_at %></td>
-          <td><%= l employee.updated_at %></td>
-          <td>
-            <%= link_to '編集', edit_admin_employee_path(employee), class: 'btn btn-skyblue mr-3' %>
-            <%= link_to '削除', [:admin, employee], method: :delete, data: {turbo_method: :delete, turbo_confirm: '削除しますか？'}, class: 'btn btn-danger' %>
-          </td>
+
+          <% if false %>
+            <td><%= employee.admin? ? 'あり' : 'なし' %></td>
+            <td><%= l employee.created_at %></td>
+            <td><%= l employee.updated_at %></td>
+          <% end %>
+
+          <% if false %>
+            <td>
+              <%= link_to '編集', edit_admin_employee_path(employee), class: 'btn btn-skyblue mr-3' %>
+              <%= link_to '削除', [:admin, employee], method: :delete, data: {turbo_method: :delete, turbo_confirm: '削除しますか？'}, class: 'btn btn-danger' %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>
