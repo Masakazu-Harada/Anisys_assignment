@@ -4,16 +4,16 @@
 
 <%= form_with model: [:admin, @employee], local: true, html: { class: 'row g-3 align-items-center' } do |f| %>
   <%# 従業員IDの表示: 新規作成時には非表示、編集時には表示 %>
-<% if @employee.persisted? %>
-  <div class="row mb-3">
-    <div class="col-sm-2">
-      <%= f.label :id, '従業員ID', class: 'col-form-label' %>
+  <% if @employee.persisted? %>
+    <div class="row mb-3">
+      <div class="col-sm-2">
+        <%= f.label :id, '従業員ID', class: 'col-form-label' %>
+      </div>
+      <div class="col-sm-10">
+        <%= f.text_field :id, class: 'form-control', readonly: true %>
+      </div>
     </div>
-    <div class="col-sm-10">
-      <%= f.text_field :id, class: 'form-control', readonly: true %>
-    </div>
-  </div>
-<% end %>
+  <% end %>
 
   <%# 名前の実装 %>
   <div class="row mb-3">
@@ -91,23 +91,22 @@
     </div>
   </div>
 
-  <%#管理者権限の実装 %>
-  <div class="form-group">
-    <div class="row">
-      <legend class="col-form-label col-sm-2 pt-0">管理者権限</legend>
-      <div class="col-sm-10">
+
+  <%# 役割（Role）の実装（チェックボックス） %>
+  <div class="row">
+    <div class="col-sm-2">
+      <%= f.label :role_ids, '役割', class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <% Role.names.keys.each do |role_key| %>
         <div class="form-check form-check-inline">
-          <%= f.radio_button :admin, "admin", class: 'form-check-input' %>
-          <%= f.label :admin_admin, '権限あり', class: 'form-check-label' %>
+          <%= f.check_box :role_ids, { multiple: true, id: "role_#{Role.names[role_key]}" }, Role.names[role_key], nil %>
+          <%= label_tag "role_#{Role.names[role_key]}", t("enums.role.name.#{role_key}"), class: 'form-check-label' %>
         </div>
-        <div class="form-check form-check-inline">
-          <%= f.radio_button :admin, "general", class: 'form-check-input' %>
-          <%= f.label :admin_general, '権限なし', class: 'form-check-label' %>
-        </div>
-      </div>
+      <% end %>
     </div>
   </div>
-  
+
   
   <div class="row mb-3">
     <!-- パスワードとパスワード確認のフィールド -->

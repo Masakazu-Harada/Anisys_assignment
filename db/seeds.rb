@@ -32,7 +32,8 @@ departments.each do |department|
   Department.find_or_create_by!(name: department)
 end
 
-roles = %w(システム管理者 人事 業務企画 予算管理 総務 経理 技術 営業 製造)
+roles = ['system_administrator', 'human_resources', 'business_planning', 'budget_management', 'general_affairs', 'accounting', 'technical', 'sales', 'manufacturing']
+
 roles.each do |role|
-  Role.find_or_create_by!(name: role)
+  Role.find_or_create_by!(name: Role.names[role])
 end

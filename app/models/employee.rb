@@ -1,4 +1,6 @@
 class Employee < ApplicationRecord
+  attr_accessor :role_ids #権限のidを取得するためのアクセサメソッド
+
   has_secure_password #パスワードのハッシュ化
   before_save { self.email = email.downcase }
   
@@ -10,16 +12,24 @@ class Employee < ApplicationRecord
   
   validates :position, presence: true
 
+  #支店モデルに属する optional: trueでnilを許可する
+  belongs_to :branch, optional: true 
 
-  belongs_to :branch, optional: true #支店モデルに属する optional: trueでnilを許可する
-  belongs_to :department, optional: true  #部署モデルに属する optional: trueでnilを許可する
-  belongs_to :role, optional: true #権限モデルに属する optional: trueでnilを許可する
+  #部署モデルに属する optional: trueでnilを許可する
+  belongs_to :department, optional: true  
   
-  belongs_to :boss, class_name: 'Employee', foreign_key: 'boss_id', optional: true #上司の従業員情報を取得するためのアソシエーション
-  has_many :team_members, class_name: 'Employee', foreign_key: 'boss_id' #部下の従業員情報を取得するためのアソシエーション
+  #上司の従業員情報を取得するためのアソシエーション
+  belongs_to :boss, class_name: 'Employee', foreign_key: 'boss_id', optional: true 
+
+  #部下の従業員情報を取得するためのアソシエーション
+  has_many :team_members, class_name: 'Employee', foreign_key: 'boss_id' 
+
+  #従業員と権限の中間テーブルのアソシエーション
+  has_many :employee_roles, dependent: :destroy, class_name: 'EmployeeRole' 
+  has_many :roles, through: :employee_roles 
 
   #admin権限をenumで管理する　0:一般, 1:管理者
-  enum admin: { general: 0, admin: 1 } 
+  #enum admin: { general: 0, admin: 1 } 
   
   #他にadmin権限を有している従業員がいるかどうかを判定するメソッド
   def other_admin_exists?
