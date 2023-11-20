@@ -127,7 +127,7 @@
     <!-- パスワード更新ボタン -->
     <% if @employee.persisted? %>
       <div class="col-md-2 align-self-end">
-        <%= button_tag 'パスワードを更新する', type: 'button', class: 'btn btn-outline-info h-100', data: { bs_toggle: "collapse", bs_target: "#new-password-fields" } %>
+        <%= button_tag 'パスワードを更新する', id: 'update-password-button', type: 'button', class: 'btn btn-outline-info h-100', data: { bs_toggle: "collapse", bs_target: "#new-password-fields" } %>
       </div>
     <% end %>
 
@@ -137,18 +137,18 @@
         <!-- 更新時用のパスワードフィールド（実際にはモデルの属性としては使用されない） -->
         <div class="form-group">
           <%= f.label :new_password, '新パスワード', class: 'col-form-label' %>
-          <%= text_field_tag :new_password, nil, id: 'new-password-field', class: 'form-control', placeholder: '新しいパスワードを入力' %>
+          <%= f.password_field :password, id: 'new-password-field', class: 'form-control', placeholder: '新しいパスワードを入力' %>
         </div>
         <div class="form-group">
           <%= f.label :new_password_confirmation, '新パスワードの確認', class: 'control-label' %>
-          <%= text_field_tag :new_password_confirmation, nil, id: 'new-password-confirmation-field', class: 'form-control', placeholder: '新しいパスワードを再入力' %>
+          <%= f.password_field :password_confirmation, id: 'new-password-confirmation-field', class: 'form-control', placeholder: '新しいパスワードを再入力' %>
         </div>
         <!-- 更新と閉じるボタン -->
         <div class="row">
           <div class="col d-flex justify-content-end">
             <div>
               <%= button_tag '更新', type: 'submit', class: 'btn btn-outline-success me-4' %>
-              <%= button_tag '閉じる', type: 'button', class: 'btn btn-outline-secondary', data: { bs_toggle: "collapse", bs_target: "#new-password-fields" } %>
+              <%= button_tag '閉じる', id: 'close-collapse-button', type: 'button', class: 'btn btn-outline-secondary', data: { bs_toggle: "collapse", bs_target: "#new-password-fields" } %>
             </div>
           </div>
         </div>
