@@ -3,7 +3,8 @@ class Admin::EmployeesController < ApplicationController
 
   def index
     @q = Employee.ransack(params[:q])
-    @employees = @q.result.includes(:branch, :department, :boss).order(id: :asc)
+    # 非アクティブな従業員を除外する
+    @employees = @q.result.where(enable: :active).includes(:branch, :department, :boss).order(id: :asc)
   end
 
   def show
