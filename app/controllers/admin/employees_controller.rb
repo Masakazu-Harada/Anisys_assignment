@@ -23,6 +23,7 @@ class Admin::EmployeesController < ApplicationController
     if @employee.save
       redirect_to admin_employee_url(@employee), notice: '従業員情報を登録しました。'
     else
+      binding.pry
       render :new, status: :unprocessable_entity
     end
   end
