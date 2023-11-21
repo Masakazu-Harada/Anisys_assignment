@@ -131,12 +131,12 @@
       <div class="col-md-6">
         <div id="new-password-fields" class="collapse">
           <div class="form-group">
-            <%= f.label :new_password, '新パスワード', class: 'col-form-label' %>
-            <%= f.password_field :new_password, id: 'update-password-field', class: 'form-control', placeholder: '新しいパスワードを入力' %>
+            <%= f.label :password, '新パスワード', class: 'col-form-label' %>
+            <%= f.password_field :password, id: 'update-password-field', class: 'form-control', placeholder: '新しいパスワードを入力' %>
           </div>
           <div class="form-group">
-            <%= f.label :new_password_confirmation, '新パスワードの確認', class: 'control-label' %>
-            <%= f.password_field :new_password_confirmation, id: 'update-password-confirmation-field', class: 'form-control', placeholder: '新しいパスワードを再入力' %>
+            <%= f.label :password_confirmation, '新パスワードの確認', class: 'control-label' %>
+            <%= f.password_field :password_confirmation, id: 'update-password-confirmation-field', class: 'form-control', placeholder: '新しいパスワードを再入力' %>
           </div>
         </div>
       </div>

@@ -1,13 +1,17 @@
 function setupPasswordToggle() {
   // パスワードを更新するボタンを取得
   const updatePasswordButton = document.getElementById('update-password-button');
-  // 他のフォームフィールドを取得
-  const formFields = document.querySelectorAll('.form-control:not(#new-password-field, #new-password-confirmation-field)');
+  // 新しいパスワードフィールドを取得
+  const newPasswordFields = document.querySelectorAll('#update-password-field, #update-password-confirmation-field');
+  // 他のフォームフィールドを取得（新しいパスワードフィールドを除く）
+  const formFields = document.querySelectorAll('.form-control:not(#update-password-field, #update-password-confirmation-field)');
 
   if (updatePasswordButton) {
     updatePasswordButton.addEventListener('click', function () {
       // フォームフィールドを無効にする
       formFields.forEach(field => field.disabled = true);
+      // 新しいパスワードフィールドを有効にする
+      newPasswordFields.forEach(field => field.disabled = false);
     });
   }
 
