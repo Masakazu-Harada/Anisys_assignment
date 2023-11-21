@@ -85,3 +85,5 @@ class Admin::EmployeesController < ApplicationController
     @supervisors = Employee.where(position: higher_positions)
   end
 end
+
+# Path: app/models/employee.rb
