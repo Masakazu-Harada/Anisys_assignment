@@ -25,7 +25,7 @@ class Employee < ApplicationRecord
   has_many :team_members, class_name: 'Employee', foreign_key: 'boss_id' 
 
   #従業員と権限の中間テーブルのアソシエーション
-  has_many :employee_roles, dependent: :destroy, class_name: 'EmployeeRole' 
+  has_many :employee_roles, dependent: :destroy
   has_many :roles, through: :employee_roles 
 
   #admin権限をenumで管理する　0:一般, 1:管理者

@@ -98,16 +98,15 @@
       <%= f.label :role_ids, '役割', class: 'col-form-label' %>
     </div>
     <div class="col-sm-10">
-      <% Role.names.keys.each do |role_key| %>
+      <%= f.collection_check_boxes :role_ids, Role.all, :id, :name do |b| %>
         <div class="form-check form-check-inline">
-          <%= f.check_box :role_ids, { multiple: true, id: "role_#{Role.names[role_key]}" }, Role.names[role_key], nil %>
-          <%= label_tag "role_#{Role.names[role_key]}", t("enums.role.name.#{role_key}"), class: 'form-check-label' %>
+          <%= b.check_box class: 'form-check-input' %>
+          <%= b.label(class: 'form-check-label') { t("enums.role.name.#{b.text}") } %>
         </div>
       <% end %>
     </div>
   </div>
 
-  
   <div class="row mb-3">
     <% if @employee.new_record? %>
       <!-- 新規登録時のパスワードフィールド -->
@@ -124,7 +123,7 @@
     <% else %>
       <!-- パスワード更新ボタン -->
       <div class="col-md-2 align-self-end">
-        <%= button_tag 'パスワードを更新する', id: 'update-password-button', type: 'button', class: 'btn btn-outline-info h-100', data: { bs_toggle: "collapse", bs_target: "#new-password-fields" } %>
+        <%= button_tag 'パスワードを更新する', id: 'update-password-button', type: 'button', class: 'btn btn-outline-success h-100', data: { bs_toggle: "collapse", bs_target: "#new-password-fields" } %>
       </div>
 
       <!-- 更新時のパスワードフィールド（コラプス） -->
@@ -147,9 +146,9 @@
   <div class="row mb-3">
     <div class="col-12">
       <% if @employee.new_record? %>
-        <%= f.submit '登録する', class: 'btn btn-primary me-2' %>
+        <%= f.submit '登録する', class: 'btn btn-outline-info me-2' %>
       <% else %>
-        <%= f.submit '更新する', class: 'btn btn-primary me-2' %>
+        <%= f.submit '更新する', class: 'btn btn-outline-info me-2' %>
         <%= link_to '削除(無効化)する', [:admin, @employee], method: :delete, data: {turbo_method: :delete, turbo_confirm: '従業員情報を無効化しますか？'}, class: 'btn btn-danger' %>
       <% end %>
       <%= link_to 'クリア', '#', class: 'btn btn-secondary', data: { action: "click->form#reset" } %>
