@@ -1,10 +1,6 @@
 <h1>従業員一覧</h1>
 
-<nav class="nav justify-content-end">
-  <%= link_to '戻る', root_path, class: 'nav-link' %> 
-</nav>
-
-<%= link_to '従業員登録', new_admin_employee_path, class: 'btn btn-primary' %>
+<%= link_to '戻る', root_path, class: 'btn btn-outline-secondary' %>
 
 <%= search_form_for @q, url: admin_employees_path, html: { data: { controller: "search", action: "input->search#submit" } } do |f| %>
   <div class="row g3 mb-3">
@@ -37,7 +33,7 @@
         <%= t('defaults.検索') %>
       <% end %>
     <% end %>
-    <%= link_to "リセット", admin_employees_path(@employees), class: "btn btn-outline-secondary" %>
+    <%= link_to "リセット", admin_employees_path(@employees), class: "btn btn-outline-warning" %>
   </div>
 <% end %>
 
