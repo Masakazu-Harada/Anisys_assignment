@@ -2,7 +2,7 @@
   <div class="btn-custom">
     <%= link_to '従業員一覧', admin_employees_path, class: "btn btn-aqua btn-lg p-3" %>
   </div>
-  <% if current_employee.admin? %>
+  <% if current_employee.has_role?('sysadmin') %>
     <div class="btn-custom">
       <%= link_to '従業員登録', new_admin_employee_path, class: "btn btn-aqua btn-lg p-3" %>
     </div>

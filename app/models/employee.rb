@@ -59,6 +59,11 @@ class Employee < ApplicationRecord
     update(enable: :active)
   end
 
+  # 指定された役割を持っているかどうかを確認するメソッド
+  def has_role?(role_name)
+    roles.exists?(name: role_name)
+  end
+
   # Roleモデルのオブジェクトで権限のsysadminを有しているかどうかを判定するメソッド
   # もしsysadminが自分を除いて１人以上いる場合はtrueを返す
   # 1人以上いれば下のdeactivate!メソッドで従業員情報を無効にできる
