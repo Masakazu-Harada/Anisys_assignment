@@ -1,5 +1,4 @@
 class Employee < ApplicationRecord
-  attr_accessor :role_ids #権限のidを取得するためのアクセサメソッド
 
   has_secure_password #パスワードのハッシュ化
   before_save { self.email = email.downcase }
@@ -27,45 +26,9 @@ class Employee < ApplicationRecord
   #従業員と権限の中間テーブルのアソシエーション
   has_many :employee_roles, dependent: :destroy
   has_many :roles, through: :employee_roles 
-
-  #admin権限をenumで管理する　0:一般, 1:管理者
-  #enum admin: { general: 0, admin: 1 } 
-  
-  #他にadmin権限を有している従業員がいるかどうかを判定するメソッド
-  def other_admin_exists?
-    # enumで定義したadminの値がgeneral（一般）の場合、
-    # trueを返すのでadminかそうでないかを判定する
-    if general?
-      true
-    else
-      # else分でadminと判定されたので
-      # 現在のidを持った管理者とは違うが管理者の存在をえexits?メソッドで判定する
-      Employee.admin.where.not(id: id).exists?
-    end
-  end
   
   #社員の退職状況をenumで管理する　0:無効（退職）, 1:有効（在籍中）
   enum enable: { inactive: 0, active: 1 } 
-
-  # 従業員を無効にするメソッド
-  def deactivate!
-    update(enable: :inactive)
-  end
-
-  # 従業員を有効にするメソッド
-  def activate!
-    update(enable: :active)
-  end
-
-  # 従業員がアクティブかどうかを判定するメソッド
-  def active?
-    enable == 'active'
-  end
-
-  # 従業員がアクティブでないかどうかを判定するメソッド
-  def inactive?
-    enable == 'inactive'
-  end
   
   #社員の役職をenumで管理する　0:一般社員, 1:係長, 2:課長, 3:部長, 4:役員, 5:社長 
   enum position: {
@@ -76,12 +39,45 @@ class Employee < ApplicationRecord
     officer: 4, #役員
     president: 5 #社長
   }
+  
+  # 従業員がアクティブかどうかを判定するメソッド
+  def active?
+    enable == 'active'
+  end
+  
+  # 従業員がアクティブでないかどうかを判定するメソッド
+  def inactive?
+    enable == 'inactive'
+  end
+
+
+  # 従業員を有効にするメソッド
+  def activate!
+    update(enable: :active)
+  end
+
+  # Roleモデルのオブジェクトで権限のsysadminを有しているかどうかを判定するメソッド
+  # もしsysadminが自分を除いて１人以上いる場合はtrueを返す
+  # 1人以上いれば下のdeactivate!メソッドで従業員情報を無効にできる
+  def other_sysadmin_exists?
+    Employee.joins(:roles).where.not(id: id).where(roles: { name: 'sysadmin' }).exists?
+  end
+
+  # 従業員を無効にするメソッド
+  # other_sysadmin_exists?メソッドの結果がtrueの場合はsysadminが２人以上いるので、その従業員を無効にするメソッド
+  def deactivate!
+    if other_sysadmin_exists?
+      update(enable: :inactive)
+    else
+      false
+    end
+  end
 
   # ransackの検索条件を設定する
   def self.ransackable_attributes(auth_object = nil)
     # 検索に使用したい属性の名前を配列として返す
     %w[boss_id branch_id department_id full_name position kana_name]
-  end
+  end  
 end
 
 

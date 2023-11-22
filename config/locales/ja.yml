@@ -33,6 +33,17 @@ ja:
           manager: '部長'
           officer: '役員'
           president: '社長'
+      role:
+        name:
+          sysadmin: 'システム管理者'
+          human_resources: '人事'
+          business_planning: '業務企画'
+          budget_management: '予算管理'
+          general_affairs: '総務'
+          accounting: '経理'
+          technical: '技術'
+          sales: '営業'
+          manufacturing: '製造'
   enums:
     employee:
       admin:
@@ -47,7 +58,7 @@ ja:
         president: '社長'
     role:
       name:
-        system_administrator: 'システム管理者'
+        sysadmin: 'システム管理者'
         human_resources: '人事'
         business_planning: '業務企画'
         budget_management: '予算管理'

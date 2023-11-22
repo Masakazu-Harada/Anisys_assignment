@@ -23,7 +23,6 @@ class Admin::EmployeesController < ApplicationController
     if @employee.save
       redirect_to admin_employee_url(@employee), notice: '従業員情報を登録しました。'
     else
-      binding.pry
       render :new, status: :unprocessable_entity
     end
   end
@@ -38,7 +37,7 @@ class Admin::EmployeesController < ApplicationController
     @employee = Employee.find(params[:id])
     higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
     @supervisors = Employee.where(position: higher_positions)
-  
+    
     if @employee.update(employee_params)
       redirect_to admin_employee_url(@employee), notice: '従業員情報を更新しました。'
     else
@@ -49,23 +48,14 @@ class Admin::EmployeesController < ApplicationController
   def destroy #従業員レコードを削除せず、有効フラグを無効にする実装
     @employee = Employee.find(params[:id])
 
-    unless @employee.other_admin_exists?
-      redirect_to admin_employees_url, alert: '他にシステム管理者がいないため、無効化できません。'
-      return
-    end
-    
+    # employeeモデルのdeactivate!メソッドを呼び出す
     if @employee.deactivate!
       redirect_to admin_employees_url, notice: "#{@employee.full_name}さんを無効化しました。"
     else
-      redirect_to admin_employees_url, alert: '従業員の無効化に失敗しました。'
+      redirect_to admin_employees_url, alert: "他にシステム管理者がいないため、#{@employee.full_name}さんを無効化できません。"
     end
   end
 
-  #def destroy レコードを削除する実装の場合
-    #@employee = Employee.find(params[:id])
-    #@employee.destroy
-    #redirect_to admin_employees_url, notice: '従業員情報を削除しました。'
-  #end
 
   private
 
@@ -78,7 +68,7 @@ class Admin::EmployeesController < ApplicationController
   end
 
   def require_admin
-    redirect_to root_url unless current_employee.admin?
+    redirect_to root_url unless current_employee.has_role?('sysadmin')
   end
 
   def set_supervisors
@@ -87,4 +77,3 @@ class Admin::EmployeesController < ApplicationController
   end
 end
 
-# Path: app/models/employee.rb

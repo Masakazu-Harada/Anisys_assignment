@@ -32,8 +32,3 @@ departments.each do |department|
   Department.find_or_create_by!(name: department)
 end
 
-roles = ['system_administrator', 'human_resources', 'business_planning', 'budget_management', 'general_affairs', 'accounting', 'technical', 'sales', 'manufacturing']
-
-roles.each do |role|
-  Role.find_or_create_by!(name: Role.names[role])
-end
