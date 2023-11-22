@@ -82,10 +82,21 @@ class Employee < ApplicationRecord
   end
 
   # ransackの検索条件を設定する
-  def self.ransackable_attributes(auth_object = nil)
+  #def self.ransackable_attributes(auth_object = nil)
     # 検索に使用したい属性の名前を配列として返す
-    %w[boss_id branch_id department_id full_name position kana_name]
-  end  
+    #%w[boss_id branch_id department_id full_name position kana_name rooles team_members]
+  #end  
+
+  # ransackの検索条件を設定する
+  def self.ransackable_attributes(auth_object = nil)
+    ["boss_id", "branch_id", "created_at", "department_id", "email", "enable", "full_name", "id", "kana_name", "log_in_id", "login_attempts", "name_with_kana", "password_digest", "position", "pwup_day", "role_id", "updated_at"]
+    end
+
+
+  # 漢字とカナ名の両方で検索できるようにするカスタムransacker
+  ransacker :name_with_kana do
+    Arel.sql("concat(full_name, ' ', kana_name)")
+  end
 end
 
 
