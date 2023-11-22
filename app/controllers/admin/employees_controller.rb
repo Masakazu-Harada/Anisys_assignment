@@ -1,6 +1,4 @@
 class Admin::EmployeesController < ApplicationController
-  before_action :set_supervisors, only: [:new, :create, :edit, :update]
-
   def index
     @q = Employee.ransack(params[:q])
     # 非アクティブな従業員を除外する
@@ -13,8 +11,6 @@ class Admin::EmployeesController < ApplicationController
 
   def new
     @employee = Employee.new
-    #higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    #@supervisors = Employee.where(position: higher_positions)
   end
 
   def create
@@ -29,18 +25,15 @@ class Admin::EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
-    #higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    #@supervisors = Employee.where(position: higher_positions)
   end
 
   def update
     @employee = Employee.find(params[:id])
-    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    @supervisors = Employee.where(position: higher_positions)
-    
+
     if @employee.update(employee_params)
       redirect_to admin_employee_url(@employee), notice: '従業員情報を更新しました。'
     else
+      @supervisors = Employee.supervisors # スコープを使用して上級役職の従業員を取得
       render :edit, status: :unprocessable_entity
     end
   end
@@ -69,11 +62,6 @@ class Admin::EmployeesController < ApplicationController
 
   def require_admin
     redirect_to root_url unless current_employee.has_role?('sysadmin')
-  end
-
-  def set_supervisors
-    higher_positions = Employee.positions.slice(:head, :manager, :officer, :president).values
-    @supervisors = Employee.where(position: higher_positions)
   end
 end
 

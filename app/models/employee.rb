@@ -39,6 +39,9 @@ class Employee < ApplicationRecord
     officer: 4, #役員
     president: 5 #社長
   }
+
+  #課長以上の役職の従業員を取得するスコープ
+  scope :supervisors, -> { where(position: [2, 3, 4, 5]) } 
   
   # 従業員がアクティブかどうかを判定するメソッド
   def active?
