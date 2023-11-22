@@ -8,3 +8,4 @@ import "controllers"
 import "@fortawesome/fontawesome-free"
 import './controllers/form_controller'
 import './password_toggle'
+import './clear_form'
