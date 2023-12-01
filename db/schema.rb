@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_151302) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_21_151128) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -18,12 +18,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_151302) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "branch_type", default: 0
     t.string "tel_number", limit: 15
     t.string "fax_number", limit: 15
     t.string "post_code", limit: 8
     t.text "address1"
     t.text "address2"
-    t.integer "branch_type"
   end
 
   create_table "departments", force: :cascade do |t|
@@ -32,25 +32,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_151302) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "employee_roles", force: :cascade do |t|
-    t.bigint "employee_id", null: false
-    t.bigint "role_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["employee_id"], name: "index_employee_roles_on_employee_id"
-    t.index ["role_id"], name: "index_employee_roles_on_role_id"
-  end
-
   create_table "employees", force: :cascade do |t|
-    t.string "full_name", limit: 20
-    t.string "kana_name", limit: 20
+    t.string "full_name", limit: 20, null: false
+    t.string "kana_name", limit: 20, null: false
     t.string "log_in_id", null: false
     t.string "password_digest", null: false
     t.integer "enable", default: 1
-    t.string "email"
+    t.string "email", null: false
     t.datetime "pwup_day"
-    t.bigint "branch_id"
-    t.bigint "department_id"
+    t.bigint "branch_id", null: false
+    t.bigint "department_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "login_attempts", default: 0, null: false
@@ -69,8 +60,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_151302) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "employee_roles", "employees"
-  add_foreign_key "employee_roles", "roles"
   add_foreign_key "employees", "branches"
   add_foreign_key "employees", "departments"
 end
