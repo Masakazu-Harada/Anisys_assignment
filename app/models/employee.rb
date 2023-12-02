@@ -10,6 +10,7 @@ class Employee < ApplicationRecord
   validates :email, presence: true, format: { with: EMAIL_REGEXP }, uniqueness: { case_sensitive: false } #メールアドレスの必須入力とフォーマットと一意性と大文字小文字の区別
   
   validates :position, presence: true
+  validate :department_presence_for_certain_positions, unless: :high_ranking_officer?
 
   #支店モデルに属する optional: trueでnilを許可する
   belongs_to :branch, optional: true 
@@ -96,6 +97,20 @@ class Employee < ApplicationRecord
   # 漢字とカナ名の両方で検索できるようにするカスタムransacker
   ransacker :name_with_kana do
     Arel.sql("concat(full_name, ' ', kana_name)")
+  end
+
+  private
+
+  # 役員または社長の場合、department_idがnilでも許可する
+  def high_ranking_officer?
+    officer? || president?
+  end
+
+  # 特定の役職に対して部署IDの存在を確認するカスタムバリデーション
+  def department_presence_for_certain_positions
+    if department_id.blank?
+      errors.add(:department_id, '部署は必須です')
+    end
   end
 end
 

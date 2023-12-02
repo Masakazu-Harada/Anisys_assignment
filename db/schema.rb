@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_21_151128) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_02_010036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_151128) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "employee_roles", force: :cascade do |t|
+    t.bigint "employee_id", null: false
+    t.bigint "role_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_employee_roles_on_employee_id"
+    t.index ["role_id"], name: "index_employee_roles_on_role_id"
+  end
+
   create_table "employees", force: :cascade do |t|
     t.string "full_name", limit: 20, null: false
     t.string "kana_name", limit: 20, null: false
@@ -41,7 +50,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_151128) do
     t.string "email", null: false
     t.datetime "pwup_day"
     t.bigint "branch_id", null: false
-    t.bigint "department_id", null: false
+    t.bigint "department_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "login_attempts", default: 0, null: false
@@ -60,6 +69,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_21_151128) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "employee_roles", "employees"
+  add_foreign_key "employee_roles", "roles"
   add_foreign_key "employees", "branches"
   add_foreign_key "employees", "departments"
 end

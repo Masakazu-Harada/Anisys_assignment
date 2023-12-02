@@ -58,6 +58,17 @@
     </div>
   </div>
 
+  <%# 所属支店の実装 %>
+  <div class="row mb-3">
+    <div class="col-sm-2">
+      <%= f.label :branch_id, required_field_label('所属支店'), class: 'col-form-label' %>
+    </div>
+    <div class="col-sm-10">
+      <%= f.select :branch_id, Branch.all.map { |b| [b.name, b.id] }, { include_blank: true }, { class: 'form-control' } %>
+    </div>
+  </div>
+
+
   <%# 部署の実装 %>
   <div class="row mb-3">
     <div class="col-sm-2">

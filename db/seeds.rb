@@ -32,3 +32,15 @@ departments.each do |department|
   Department.find_or_create_by!(name: department)
 end
 
+# Rolesの作成
+Role.find_or_create_by!(name: 'sysadmin')
+Role.find_or_create_by!(name: 'management')
+Role.find_or_create_by!(name: 'general_affairs')
+Role.find_or_create_by!(name: 'accounting')
+
+# 原田オブジェクトにsysadmin権限を紐付け
+harada = Employee.find_by(log_in_id: 'seungri.uhm@gmail.com')
+if harada
+  sysadmin_role = Role.find_by(name: 'sysadmin')
+  EmployeeRole.find_or_create_by!(employee_id: harada.id, role_id: sysadmin_role.id)
+end
