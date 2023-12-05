@@ -83,3 +83,4 @@ gem 'ransack'
 gem 'enum_help'
 gem "font-awesome-sass", "~> 6.4.2"
 gem 'pry-rails'
+gem 'roo'
