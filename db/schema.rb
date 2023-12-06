@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_05_074108) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_06_030106) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +83,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_05_074108) do
     t.float "total_overtime_hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "attendance_status"
+    t.float "actual_work_hours"
     t.index ["employee_id"], name: "index_work_schedules_on_employee_id"
   end
 
