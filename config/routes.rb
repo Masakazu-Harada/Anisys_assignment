@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'work_schedules/index'
   root to: 'home#top'
   get  '/login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
