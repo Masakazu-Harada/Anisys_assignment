@@ -1,12 +1,13 @@
 class WorkSchedulesController < ApplicationController
   def index
-    # データベースから最新の勤務スケジュールデータを取得
-    @work_schedules = WorkSchedule.all.order(date: :asc)
-
-    # ファイルがアップロードされた場合の処理（オプション）
+    # ファイルがアップロードされた場合の処理
     if params[:file].present?
       @work_schedules = WorkSchedule.read_from_file(params[:file])
       # ここでは @work_schedules をビューで表示するだけで、DBには保存しない
+    else
+      # ここで特定の従業員に絞り込むロジックが必要
+      # 例: 現在のユーザー（従業員）に関連するデータのみを取得する
+      @work_schedules = current_employee.work_schedules.order(date: :asc)
     end
   end
 
