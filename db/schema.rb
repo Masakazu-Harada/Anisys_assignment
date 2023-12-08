@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_06_030106) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_07_075415) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -72,19 +72,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_030106) do
   create_table "work_schedules", force: :cascade do |t|
     t.bigint "employee_id", null: false
     t.date "date", null: false
-    t.time "start_time"
-    t.time "end_time"
-    t.integer "break_time"
-    t.integer "over_time"
+    t.string "start_time"
+    t.string "end_time"
+    t.string "break_time"
+    t.string "over_time"
     t.integer "total_work_days"
     t.integer "absent_days"
     t.integer "paid_leave_days"
-    t.float "total_work_hours"
-    t.float "total_overtime_hours"
+    t.string "total_work_hours"
+    t.string "total_overtime_hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "attendance_status"
-    t.float "actual_work_hours"
+    t.string "actual_work_hours"
     t.index ["employee_id"], name: "index_work_schedules_on_employee_id"
   end
 

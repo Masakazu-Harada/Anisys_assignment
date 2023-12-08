@@ -27,17 +27,30 @@ class WorkSchedule < ApplicationRecord
         start_time: sheet.cell('B', row).to_s.split(' ').last,
         end_time: sheet.cell('C', row).to_s.split(' ').last,
         break_time: sheet.cell('D', row).to_s,
-        work_time: sheet.cell('E', row).to_s,
-        overtime: sheet.cell('F', row).to_s,
+        actual_work_hours: sheet.cell('E', row).to_s,  # 変更部分
+        over_time: sheet.cell('F', row).to_s,
         attendance_status: sheet.cell('G', row).to_s,
         total_work_hours: total_work_hours,
         total_overtime_hours: total_overtime_hours,
-        total_paid_leave_days: total_paid_leave_days,
-        total_absent_days: total_absent_days,
-        total_working_days: total_working_days
+        paid_leave_days: total_paid_leave_days,
+        absent_days: total_absent_days,
+        total_work_days: total_working_days
       )
     end
 
     work_schedules
+  end
+
+
+  # 読み込んだデータをデータベースに保存するためのメソッド
+  def self.import(work_schedules)
+    work_schedules.each do |schedule|
+      # 重複するデータがないかチェックする
+      # 例: 同じ日付と従業員IDのデータが既に存在するか
+      next if exists?(employee_id: schedule.employee_id, date: schedule.date)
+
+      # データベースに保存する
+      schedule.save
+    end
   end
 end
