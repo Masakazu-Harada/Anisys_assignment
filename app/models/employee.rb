@@ -27,6 +27,9 @@ class Employee < ApplicationRecord
   #従業員と権限の中間テーブルのアソシエーション
   has_many :employee_roles, dependent: :destroy
   has_many :roles, through: :employee_roles 
+
+  #従業員と勤務スケジュールのアソシエーション
+  has_many :work_schedules, dependent: :destroy 
   
   #社員の退職状況をenumで管理する　0:無効（退職）, 1:有効（在籍中）
   enum enable: { inactive: 0, active: 1 } 

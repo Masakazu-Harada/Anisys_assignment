@@ -44,12 +44,25 @@ class WorkSchedule < ApplicationRecord
 
   # 読み込んだデータをデータベースに保存するためのメソッド
   def self.import(work_schedules)
-    work_schedules.each do |schedule|
-      # 重複するデータがないかチェックする
-      # 例: 同じ日付と従業員IDのデータが既に存在するか
-      next if exists?(employee_id: schedule.employee_id, date: schedule.date)
-
-      # データベースに保存する
+    work_schedules.each do |imported_schedule|
+      schedule = WorkSchedule.find_or_initialize_by(employee_id: imported_schedule.employee_id, date: imported_schedule.date)
+  
+      # 新しいデータでレコードの属性を更新
+      schedule.attributes = {
+        start_time: imported_schedule.start_time,
+        end_time: imported_schedule.end_time,
+        break_time: imported_schedule.break_time,
+        actual_work_hours: imported_schedule.actual_work_hours,
+        over_time: imported_schedule.over_time,
+        attendance_status: imported_schedule.attendance_status,
+        total_work_hours: imported_schedule.total_work_hours,
+        total_overtime_hours: imported_schedule.total_overtime_hours,
+        paid_leave_days: imported_schedule.paid_leave_days,
+        absent_days: imported_schedule.absent_days,
+        total_work_days: imported_schedule.total_work_days
+      }
+  
+      # データベースに保存
       schedule.save
     end
   end
